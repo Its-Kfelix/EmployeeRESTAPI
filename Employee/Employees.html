@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--This is a code that will fetch employees data by clicking on the get all
+     employees button using the web api and delete the data by clicking the clear button-->
+    <meta charset="utf-8" />
+    <title>Show Employees</title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ulEmployees = $('#ulEmployees');
+            $('#btn').click(function () {
+                $.ajax({
+                    type: 'Get',
+                    url: 'https://localhost:44307/api/employee',
+                    dataType: 'json',
+                    success: function (data) {
+                        ulEmployees.empty();
+                        $.each(data, function (index, employee) {
+                            var fullName = employee.FastName + ' ' + employee.LastName;
+                            ulEmployees.append('<li>' + fullName + '<li>')
+                        });
+                    }
+                });
+            });
+
+            $('#btnClear').click(function () {
+                ulEmployees.empty();
+            });
+        });
+    </script>
+</head>
+<body>
+    <input id="btn" type="button" value="Get all Employees" />
+    <input id="btnClear" type="button" value="Clear" />
+    <ul id="ulEmployees"/>
+
+</body>
+</html>
